@@ -136,11 +136,11 @@ export default {
         if (valid) {
           this.loading = true;
           this["user/login"](this.loginForm)
-            .then((res) => {
-              this.$router.push({ path: this.redirect } || "/");
+            .then(() => {
+              this.$router.push({ path: this.redirect || "/" });
               this.loading = false;
             })
-            .catch((err) => {
+            .catch(() => {
               // 错误消息已经在响应拦截器中提示过了，这里不需要再次提示
               this.loading = false;
             });
