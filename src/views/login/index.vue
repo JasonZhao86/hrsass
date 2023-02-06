@@ -142,6 +142,7 @@ export default {
             })
             .catch(() => {
               // 错误消息已经在响应拦截器中提示过了，这里不需要再次提示
+              console.log("~~~");
               this.loading = false;
             });
         } else {

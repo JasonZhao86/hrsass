@@ -29,14 +29,22 @@ const actions = {
   // async login(context, data) {
   //   const res = await login(data);
   //   context.commit("setToken", res);
-  // }
+  // },
+  // async/await不用返回new Promise，因为async函数本身就是Promise，promise的值是函数的返回的值
   login(context, data) {
-    return new Promise((resolve) => {
-      login(data).then((res) => {
-        context.commit("setToken", res);
-        setTimeStamp();
-        resolve();
-      });
+    return new Promise((resolve, reject) => {
+      login(data).then(
+        (res) => {
+          if (res.data.success) {
+            context.commit("setToken", res); // 提交mutations设置token
+            setTimeStamp();
+            resolve(); // 表示执行成功了
+          }
+        },
+        (err) => {
+          reject(err);
+        }
+      );
     });
   },
 

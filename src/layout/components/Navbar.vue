@@ -63,11 +63,12 @@
 </template>
 
 <script>
-import { mapGetters, createNamespacedHelpers } from "vuex";
+import { mapGetters } from "vuex";
+// import { createNamespacedHelpers } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
 
-const { mapActions } = createNamespacedHelpers("user");
+// const { mapActions } = createNamespacedHelpers("user");
 
 export default {
   components: {
@@ -83,11 +84,11 @@ export default {
     ...mapGetters(["sidebar", "name", "staffPhoto"]),
   },
   methods: {
-    ...mapActions(["logout"]),
-    // async logout() {
-    //   await this.$store.dispatch("user/logout");
-    //   this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-    // },
+    // ...mapActions(["logout"]),
+    async logout() {
+      await this.$store.dispatch("user/logout");
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+    },
     toggleSideBar() {
       this.$store.dispatch("app/toggleSideBar");
     },
