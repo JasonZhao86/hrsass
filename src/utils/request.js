@@ -58,7 +58,7 @@ service.interceptors.response.use(
       router.push("/login");
       Message.error("token过期，请重新登录");
     } else {
-      Message.error(error.message);
+      Message.error(error.message || error);
     }
     return Promise.reject(error);
   }

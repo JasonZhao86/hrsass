@@ -35,11 +35,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       login(data).then(
         (res) => {
-          if (res.data.success) {
-            context.commit("setToken", res); // 提交mutations设置token
-            setTimeStamp();
-            resolve(); // 表示执行成功了
-          }
+          context.commit("setToken", res); // 提交mutations设置token
+          setTimeStamp();
+          resolve(); // 表示执行成功了
         },
         (err) => {
           reject(err);
