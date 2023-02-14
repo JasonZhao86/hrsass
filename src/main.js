@@ -17,6 +17,16 @@ import "@/permission"; // permission control
 
 import * as directives from "@/directives";
 
+import Component from "@/components";
+import * as filters from "@/filters";
+
+import Print from "vue-print-nb";
+
+// 全局注册自定义的工具组件
+Vue.use(Component);
+
+Vue.use(Print);
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -38,6 +48,11 @@ Vue.use(ElementUI, { locale });
 // 遍历所有的导出的指令对象，完成自定义指令的全局注册
 Object.keys(directives).forEach((key) => {
   Vue.directive(key, directives[key]);
+});
+
+// 注册全局的过滤器
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key]);
 });
 
 Vue.config.productionTip = false;

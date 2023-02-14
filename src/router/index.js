@@ -41,6 +41,20 @@ export const constantRoutes = [
     ],
   },
 
+  {
+    path: "/import",
+    component: Layout,
+    // 隐藏在左侧菜单中
+    hidden: true,
+    children: [
+      {
+        // 二级路由path什么都不写表示为二级的默认路由
+        path: "",
+        component: () => import("@/views/import"),
+      },
+    ],
+  },
+
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true },
 ];

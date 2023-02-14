@@ -21,5 +21,27 @@ export default {
         icon: "people",
       },
     },
+    {
+      // query动态路由传参
+      path: "detail/:id",
+      component: () => import("@/views/employees/detail"),
+      // 不在左侧菜单显示
+      hidden: true,
+      meta: {
+        // 标记当前路由规则的中文名称，后续在做左侧菜单时使用
+        title: "员工详情",
+      },
+    },
+    {
+      path: "print/:id",
+      // 按需加载
+      component: () => import("@/views/employees/print"),
+      hidden: true,
+      meta: {
+        // 标记当前路由规则的中文名称 后续在做左侧菜单时 使用
+        title: "打印",
+        icon: "people",
+      },
+    },
   ],
 };
