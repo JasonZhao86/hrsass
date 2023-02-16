@@ -25,8 +25,27 @@ router.beforeEach(async (to, from, next) => {
       } else {
         try {
           // 往vuex中注入用户信息，await：因为我们想获取完资料后才放行路由
-          await store.dispatch("user/getUserInfo");
-          next();
+          const { roles } = await store.dispatch("user/getUserInfo");
+          const routes = await store.dispatch(
+            "permission/filterRoutes",
+            roles.menus
+          );
+          /* 
+            routes就是筛选得到的动态路由，将动态路由添加到路由表中，默认的路由表
+            只有静态路由没有动态路由，addRoutes必须用next(地址)、不能用next()
+          */
+          router.addRoutes([
+            ...routes,
+            { path: "*", redirect: "/404", hidden: true },
+          ]); // 添加动态路由到路由表，铺路
+          /* 
+            添加完动态路由之后，必须跳到对应的地址，相当于多做一次跳转，为什么要多做
+            一次跳转？进门了，但是进门之后我要去的地方的路还没有铺好，直接走，掉坑里，
+            多做一次跳转，再从门外往里进一次，跳转之前把路铺好，再次进来的时候，路就
+            铺好了（因为此时vuex中已经有userId了，不会进入该分支，直接方向）
+          */
+          next(to.path);
+          NProgress.done();
         } catch (err) {
           await store.dispatch("user/logout");
           // 后台获取用户信息失败

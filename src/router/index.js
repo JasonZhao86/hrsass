@@ -56,7 +56,7 @@ export const constantRoutes = [
   },
 
   // 404 page must be placed at the end !!!
-  { path: "*", redirect: "/404", hidden: true },
+  // { path: "*", redirect: "/404", hidden: true },
 ];
 
 export const asyncRoutes = [
@@ -75,7 +75,7 @@ const createRouter = () =>
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }), // 管理滚动行为，如果出现滚动切换就让页面回到顶部
     // routes: constantRoutes,
-    routes: [...constantRoutes, ...asyncRoutes], // 临时合并所有的路由
+    routes: [...constantRoutes],
   });
 
 const router = createRouter();

@@ -78,6 +78,7 @@
           <el-table-column label="操作" sortable="" fixed="right" width="280">
             <template slot-scope="{ row }">
               <el-button
+                :disabled="!checkPermission('POINT-USER-UPDATE')"
                 type="text"
                 size="small"
                 @click="$router.push(`/employees/detail/${row.id}`)"
@@ -86,7 +87,9 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="editRole(row.id)"
+                >角色</el-button
+              >
               <el-button
                 type="text"
                 size="small"
@@ -119,6 +122,12 @@
         <canvas ref="myCanvas" />
       </el-row>
     </el-dialog>
+    <assign-role
+      v-loading="loading"
+      ref="assignRole"
+      :show-role-dialog.sync="showRoleDialog"
+      :user-id="userId"
+    />
   </div>
 </template>
 
@@ -126,12 +135,14 @@
 import { getEmployeeList, delEmployee } from "@/api/employees";
 import EmployeeEnum from "@/api/constant/employees";
 import AddEmployee from "./components/add-employee";
+import AssignRole from "./components/assign-role";
 import { formatDate } from "@/filters";
 import QrCode from "qrcode";
 
 export default {
   components: {
     AddEmployee,
+    AssignRole,
   },
   data() {
     return {
@@ -144,6 +155,8 @@ export default {
       },
       showDialog: false,
       showCodeDialog: false,
+      showRoleDialog: false, // 显示分配角色弹层
+      userId: null,
     };
   },
   methods: {
@@ -277,6 +290,15 @@ export default {
       } else {
         this.$message.warning("该用户还未上传头像");
       }
+    },
+    async editRole(userId) {
+      this.loading = true;
+      // props赋值，DOM渲染异步的
+      this.userId = userId;
+      // 调用子组件方法，异步方法
+      await this.$refs.assignRole.getUserDetailById(userId);
+      this.showRoleDialog = true;
+      this.loading = false;
     },
   },
   created() {

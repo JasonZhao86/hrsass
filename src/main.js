@@ -19,6 +19,7 @@ import * as directives from "@/directives";
 
 import Component from "@/components";
 import * as filters from "@/filters";
+import CheckPermission from "@/mixin/checkPermission";
 
 import Print from "vue-print-nb";
 
@@ -54,6 +55,9 @@ Object.keys(directives).forEach((key) => {
 Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key]);
 });
+
+// 全局混入检查对象，所有组件都会拥有了权限检查的方法
+Vue.mixin(CheckPermission);
 
 Vue.config.productionTip = false;
 
