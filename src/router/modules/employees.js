@@ -9,6 +9,7 @@ export default {
     {
       // 二级路由的path什么都不写时，表示该路由为当前二级路由的默认路由
       path: "",
+      name: "employees",
       // 动态导入
       component: () => import("@/views/employees"),
       /* 
